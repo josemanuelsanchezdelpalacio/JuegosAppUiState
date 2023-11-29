@@ -5,27 +5,38 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dam2jms.juegosappuistate.states.NonesUiState
 
-class ViewModelSiete: ViewModel() {
+class ViewModelSiete : ViewModel() {
 
     private val _uiState = MutableLiveData<NonesUiState>()
     val uiState: LiveData<NonesUiState> = _uiState
 
     fun onJuego() {
-        //tanto el jugador como el PC obtiene una carta random y se le da el valor de esa carta
+        // Tanto el jugador como el PC obtienen una carta random y se les da el valor de esa carta
         val cartaJugador = cartas()
         val valorCartaJugador = valorCarta(cartaJugador)
 
         val cartaPC = cartas()
         val valorCartaPC = valorCarta(cartaPC)
 
-        //se van sumando cada vez que pida una carta
-        val nuevaPuntuacionJugador = _uiState.value!!.puntuacionJugador + valorCartaJugador
-        val nuevaPuntuacionPC = _uiState.value!!.puntuacionPC + valorCartaPC
+        // Se van sumando cada vez que pida una carta
+        val currentState = _uiState.value
+        if (currentState != null) {
+            val nuevaPuntuacionJugador = currentState.puntuacionJugador + valorCartaJugador
+            val nuevaPuntuacionPC = currentState.puntuacionPC + valorCartaPC
 
-        if (nuevaPuntuacionPC > 7.5) {
-            _uiState.value = _uiState.value!!.copy(resultado = "Has ganado, el PC se ha pasado de 7.5", puntuacionJugador = nuevaPuntuacionJugador, puntuacionPC = nuevaPuntuacionPC)
-        } else if (nuevaPuntuacionPC > nuevaPuntuacionJugador) {
-            _uiState.value = _uiState.value!!.copy(resultado = "Has perdido, el PC tiene más puntos", puntuacionJugador = nuevaPuntuacionJugador, puntuacionPC = nuevaPuntuacionPC)
+            if (nuevaPuntuacionPC > 7.5) {
+                _uiState.value = currentState.copy(
+                    resultado = "Has ganado, el PC se ha pasado de 7.5",
+                    puntuacionJugador = nuevaPuntuacionJugador,
+                    puntuacionPC = nuevaPuntuacionPC
+                )
+            } else if (nuevaPuntuacionPC > nuevaPuntuacionJugador) {
+                _uiState.value = currentState.copy(
+                    resultado = "Has perdido, el PC tiene más puntos",
+                    puntuacionJugador = nuevaPuntuacionJugador,
+                    puntuacionPC = nuevaPuntuacionPC
+                )
+            }
         }
     }
 
