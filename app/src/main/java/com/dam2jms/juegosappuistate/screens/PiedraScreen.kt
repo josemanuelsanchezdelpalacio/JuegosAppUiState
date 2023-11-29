@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -39,12 +40,12 @@ import com.dam2jms.juegosappuistate.ui.ViewModelPiedraState
 @Composable
 fun piedraScreenState(navController: NavController, mvvm: ViewModelPiedraState) {
 
-    val uiState: NonesUiState by mvvm.uiState.observeAsState(NonesUiState())
+    val uiState by mvvm.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "VECES GANADAS: $uiState.puntuacion") },
+                title = { Text(text = "VECES GANADAS: ${uiState.puntuacionJugador}") },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary

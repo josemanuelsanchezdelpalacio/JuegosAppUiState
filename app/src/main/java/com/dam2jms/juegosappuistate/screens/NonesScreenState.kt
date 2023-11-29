@@ -43,7 +43,7 @@ fun nonesScreenState(navController: NavController, mvvm: ViewModelNonesState) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "PUNTUACION: ${nonesUiState.puntuacion}") },
+                title = { Text(text = "PUNTUACION: ${nonesUiState.puntuacionJugador}") },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary

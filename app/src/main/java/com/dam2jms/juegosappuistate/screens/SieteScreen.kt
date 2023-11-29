@@ -40,7 +40,7 @@ fun sieteScreen(navController: NavController, mvvm: ViewModelSiete) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "PUNTUACION JUGADOR: ${uiState.puntuacion}\n PUNTUACION PC: ${uiState.puntuacionPC}") },
+                title = { Text(text = "PUNTUACION JUGADOR: ${uiState.puntuacionJugador}\n PUNTUACION PC: ${uiState.puntuacionPC}") },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary

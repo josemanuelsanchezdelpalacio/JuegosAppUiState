@@ -23,11 +23,9 @@ class ViewModelSiete: ViewModel() {
         val nuevaPuntuacionPC = _uiState.value!!.puntuacionPC + valorCartaPC
 
         if (nuevaPuntuacionPC > 7.5) {
-            _uiState.value = _uiState.value!!.copy(resultado = "Has ganado, el PC se ha pasado de 7.5", puntuacionJugador = nuevaPuntuacionJugador.toInt(), puntuacionPC = nuevaPuntuacionPC.toInt())
+            _uiState.value = _uiState.value!!.copy(resultado = "Has ganado, el PC se ha pasado de 7.5", puntuacionJugador = nuevaPuntuacionJugador, puntuacionPC = nuevaPuntuacionPC)
         } else if (nuevaPuntuacionPC > nuevaPuntuacionJugador) {
-            _uiState.value = _uiState.value!!.copy(resultado = "Has perdido, el PC tiene más puntos", puntuacionJugador = nuevaPuntuacionJugador.toInt(), puntuacionPC = nuevaPuntuacionPC.toInt())
-        } else {
-            _uiState.value = _uiState.value!!.copy(resultado = "Sigue jugando", puntuacionJugador = nuevaPuntuacionJugador.toInt(), puntuacionPC = nuevaPuntuacionPC.toInt())
+            _uiState.value = _uiState.value!!.copy(resultado = "Has perdido, el PC tiene más puntos", puntuacionJugador = nuevaPuntuacionJugador, puntuacionPC = nuevaPuntuacionPC)
         }
     }
 

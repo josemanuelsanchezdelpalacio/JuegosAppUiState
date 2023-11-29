@@ -38,12 +38,12 @@ class ViewModelNonesState : ViewModel() {
                 if ((_uiState.value.seleccionJugador == "nones" && suma % 2 != 0) || (_uiState.value.seleccionJugador == "pares" && suma % 2 == 0)) {
                     _uiState.value.resultado = "ganas"
                     _uiState.update { currentState ->
-                        currentState.copy(puntuacion = currentState.puntuacion.inc())
+                        currentState.copy(puntuacionJugador = currentState.puntuacionJugador.inc())
                     }
                 } else {
                     _uiState.value.resultado = "pierdes"
                     _uiState.update { currentState ->
-                        currentState.copy(puntuacion = currentState.puntuacion.dec())
+                        currentState.copy(puntuacionJugador = currentState.puntuacionJugador.dec())
                     }
                 }
 

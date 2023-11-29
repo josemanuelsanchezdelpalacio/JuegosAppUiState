@@ -6,14 +6,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dam2jms.juegosappuistate.states.NonesUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class ViewModelPiedraState : ViewModel() {
 
-    private val _uiState = MutableLiveData(NonesUiState())
-    val uiState: LiveData<NonesUiState> = _uiState
+    private val _uiState = MutableStateFlow(NonesUiState())
+    val uiState: StateFlow<NonesUiState> = _uiState.asStateFlow()
 
     fun onSeleccionJugador(seleccionJugadorUi: String) {
-        _uiState.value = _uiState.value?.copy(seleccionJugador = seleccionJugadorUi)
+        _uiState.update {
+                currentState -> currentState.copy(seleccionJugador = seleccionJugadorUi)
+        }
     }
 
     fun onJuego(context: Context) {
@@ -33,14 +39,19 @@ class ViewModelPiedraState : ViewModel() {
                 (_uiState.value?.seleccionJugador.equals("tijeras") && seleccionPC.equals("papel"))
             ) {
                 _uiState.value?.resultado = "Jugador"
-                _uiState.value = _uiState.value?.copy(resultado = "Jugador", puntuacion = _uiState.value?.puntuacion?.inc() ?: 0)
+                _uiState.update { currentState ->
+                    currentState.copy(puntuacionJugador = currentState.puntuacionJugador.inc())
+                }
             } else {
                 //si no es ninguna de las comparaciones anteriores gana el PC
                 _uiState.value?.resultado = "PC"
+                _uiState.update { currentState ->
+                    currentState.copy(puntuacionJugador = currentState.puntuacionJugador.dec())
+                }
             }
 
             //muestro el resultado
-            _uiState.value = _uiState.value?.copy(resultado = "Jugador: ${_uiState.value?.seleccionJugador}\n PC: ${seleccionPC}\n Resultado: ${_uiState.value?.resultado}")
+            _uiState.value.resultado = "Jugador: ${_uiState.value.seleccionJugador}\n PC: $seleccionPC.\n Resultado: ${_uiState.value.resultado}"
         } else {
             Toast.makeText(context, "Solo puedes elejir entre piedra, papel o tijeras", Toast.LENGTH_SHORT).show()
         }
