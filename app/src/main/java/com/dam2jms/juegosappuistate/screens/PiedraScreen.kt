@@ -100,7 +100,6 @@ fun piedraBodyContentState(modifier: Modifier, mvvm: ViewModelPiedra, nonesUiSta
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-
         ) {
             Text(text = "JUGAR")
         }
