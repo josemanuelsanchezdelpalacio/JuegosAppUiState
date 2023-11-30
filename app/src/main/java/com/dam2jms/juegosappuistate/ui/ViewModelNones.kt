@@ -3,16 +3,16 @@ package com.dam2jms.juegosappuistate.ui
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.dam2jms.juegosappuistate.states.NonesUiState
+import com.dam2jms.juegosappuistate.states.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class ViewModelNonesState : ViewModel() {
+class ViewModelNones : ViewModel() {
 
-    private val _uiState = MutableStateFlow(NonesUiState())
-    val uiState: StateFlow<NonesUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     fun onChange(seleccionJugadorUi: String, numeroJugadorUi: Int){
         _uiState.update {
@@ -38,12 +38,12 @@ class ViewModelNonesState : ViewModel() {
                 if ((_uiState.value.seleccionJugador == "nones" && suma % 2 != 0) || (_uiState.value.seleccionJugador == "pares" && suma % 2 == 0)) {
                     _uiState.value.resultado = "ganas"
                     _uiState.update { currentState ->
-                        currentState.copy(puntuacion = currentState.puntuacion.inc())
+                        currentState.copy(puntuacionJugador = currentState.puntuacionJugador.inc())
                     }
                 } else {
                     _uiState.value.resultado = "pierdes"
                     _uiState.update { currentState ->
-                        currentState.copy(puntuacion = currentState.puntuacion.dec())
+                        currentState.copy(puntuacionJugador = currentState.puntuacionJugador.dec())
                     }
                 }
 

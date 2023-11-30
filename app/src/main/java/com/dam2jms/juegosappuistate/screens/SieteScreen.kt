@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -29,18 +30,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dam2jms.juegosappuistate.states.NonesUiState
+import com.dam2jms.juegosappuistate.states.UiState
 import com.dam2jms.juegosappuistate.ui.ViewModelSiete
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun sieteScreen(navController: NavController, mvvm: ViewModelSiete) {
-    val uiState: NonesUiState by mvvm.uiState.observeAsState(NonesUiState())
+    val uiState by mvvm.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "PUNTUACION JUGADOR: ${uiState.puntuacion}\n PUNTUACION PC: ${uiState.puntuacionPC}") },
+                title = {
+                    Text(text = "VALOR CARTAS JUGADOR: ${uiState.valorCartasJugador}\n" + "APUESTA BANCA: " + uiState.apuesta)
+                },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
@@ -56,13 +59,14 @@ fun sieteScreen(navController: NavController, mvvm: ViewModelSiete) {
         sieteBodyContent(
             modifier = Modifier.padding(paddingValues),
             mvvm = mvvm,
-            resultado = uiState.resultado
+            resultado = uiState.resultado,
+            uiState
         )
     }
 }
 
 @Composable
-fun sieteBodyContent(modifier: Modifier, mvvm: ViewModelSiete, resultado: String){
+fun sieteBodyContent(modifier: Modifier, mvvm: ViewModelSiete, resultado: String, uiState: UiState) {
 
     var mostrarAlertDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -74,12 +78,23 @@ fun sieteBodyContent(modifier: Modifier, mvvm: ViewModelSiete, resultado: String
     ) {
         Spacer(modifier = Modifier.height(50.dp))
 
+        // Dinero ganado por el jugador
+        Text(text = "Dinero Ganado por Jugador: ${uiState.dineroGanadoJugador}")
+
+        // Dinero ganado por la PC
+        Text(text = "Dinero Ganado por PC: ${uiState.dineroGanadoPC}")
+
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         if (mostrarAlertDialog && resultado.isNotEmpty()) {
             AlertDialog(
                 text = {
                     Text(text = resultado)
                 },
-                onDismissRequest = { mostrarAlertDialog = false },
+                onDismissRequest = {
+                    mostrarAlertDialog = false
+                },
                 confirmButton = {
                     TextButton(onClick = { mostrarAlertDialog = false }) {
                         Text(text = "OK")

@@ -5,12 +5,12 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dam2jms.juegosappuistate.states.NonesUiState
+import com.dam2jms.juegosappuistate.states.UiState
 
-class ViewModelPiedraState : ViewModel() {
+class ViewModelPiedra : ViewModel() {
 
-    private val _uiState = MutableLiveData(NonesUiState())
-    val uiState: LiveData<NonesUiState> = _uiState
+    private val _uiState = MutableLiveData(UiState())
+    val uiState: LiveData<UiState> = _uiState
 
     fun onSeleccionJugador(seleccionJugadorUi: String) {
         _uiState.value = _uiState.value?.copy(seleccionJugador = seleccionJugadorUi)
@@ -33,7 +33,7 @@ class ViewModelPiedraState : ViewModel() {
                 (_uiState.value?.seleccionJugador.equals("tijeras") && seleccionPC.equals("papel"))
             ) {
                 _uiState.value?.resultado = "Jugador"
-                _uiState.value = _uiState.value?.copy(resultado = "Jugador", puntuacion = _uiState.value?.puntuacion?.inc() ?: 0)
+                _uiState.value = _uiState.value?.copy(resultado = "Jugador", puntuacionJugador = _uiState.value?.puntuacionJugador?.inc() ?: 0)
             } else {
                 //si no es ninguna de las comparaciones anteriores gana el PC
                 _uiState.value?.resultado = "PC"

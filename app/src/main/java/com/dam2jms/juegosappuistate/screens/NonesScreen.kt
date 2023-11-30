@@ -31,19 +31,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dam2jms.juegosappuistate.states.NonesUiState
-import com.dam2jms.juegosappuistate.ui.ViewModelNonesState
+import com.dam2jms.juegosappuistate.states.UiState
+import com.dam2jms.juegosappuistate.ui.ViewModelNones
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun nonesScreenState(navController: NavController, mvvm: ViewModelNonesState) {
+fun nonesScreenState(navController: NavController, mvvm: ViewModelNones) {
 
     val nonesUiState by mvvm.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "PUNTUACION: ${nonesUiState.puntuacion}") },
+                title = { Text(text = "PUNTUACION: ${nonesUiState.puntuacionJugador}") },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
@@ -61,7 +61,7 @@ fun nonesScreenState(navController: NavController, mvvm: ViewModelNonesState) {
 }
 
 @Composable
-fun nonesBodyContentState(modifier: Modifier, mvvm: ViewModelNonesState, nonesUiState: NonesUiState) {
+fun nonesBodyContentState(modifier: Modifier, mvvm: ViewModelNones, nonesUiState: UiState) {
 
     var mostrarAlertDialog by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current

@@ -31,15 +31,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dam2jms.juegosappuistate.states.NonesUiState
-import com.dam2jms.juegosappuistate.ui.ViewModelPiedraState
+import com.dam2jms.juegosappuistate.states.UiState
+import com.dam2jms.juegosappuistate.ui.ViewModelPiedra
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun piedraScreenState(navController: NavController, mvvm: ViewModelPiedraState) {
+fun piedraScreenState(navController: NavController, mvvm: ViewModelPiedra) {
 
-    val uiState: NonesUiState by mvvm.uiState.observeAsState(NonesUiState())
+    val uiState: UiState by mvvm.uiState.observeAsState(UiState())
 
     Scaffold(
         topBar = {
@@ -62,7 +62,7 @@ fun piedraScreenState(navController: NavController, mvvm: ViewModelPiedraState) 
 }
 
 @Composable
-fun piedraBodyContentState(modifier: Modifier, mvvm: ViewModelPiedraState, nonesUiState: NonesUiState) {
+fun piedraBodyContentState(modifier: Modifier, mvvm: ViewModelPiedra, nonesUiState: UiState) {
 
     var mostrarAlertDialog by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
