@@ -77,14 +77,10 @@ fun sieteBodyContent(modifier: Modifier, mvvm: ViewModelSiete, resultado: String
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(50.dp))
-
         // Dinero ganado por el jugador
         Text(text = "Dinero Ganado por Jugador: ${uiState.dineroGanadoJugador}")
-
         // Dinero ganado por la PC
         Text(text = "Dinero Ganado por PC: ${uiState.dineroGanadoPC}")
-
-
         Spacer(modifier = Modifier.height(16.dp))
 
         if (mostrarAlertDialog && resultado.isNotEmpty()) {
